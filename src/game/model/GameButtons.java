@@ -2,8 +2,11 @@ package game.model;
 
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
+
+import java.awt.*;
 
 public class GameButtons extends Button {
 
@@ -53,9 +56,9 @@ public class GameButtons extends Button {
             }
         });
 
-        setOnMouseEntered(mouseEvent -> setEffect(new DropShadow()));
+        setOnMouseEntered(mouseEvent -> setEffect(new SepiaTone()));
 
-        setOnMouseExited(mouseEvent -> setEffect(null));
+        setOnMouseExited(mouseEvent -> setEffect(new DropShadow()));
     }
 
 }

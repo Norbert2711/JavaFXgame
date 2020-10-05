@@ -1,12 +1,21 @@
 package game.view;
 
 import game.model.GameButtons;
+import game.model.GameSubscene;
+import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Reflection;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +38,25 @@ public class View {
         mainStage = new Stage();
         mainStage.setScene(mainScene);
         createBackground();
+        addRocketGif();
+        addStarsGif();
+        createLogo();
+        addCursorLook();
 
         gameButtonsList = new ArrayList<>();
         addButtons();
+
+        GameSubscene gameSubscene = new GameSubscene();
+        gameSubscene.setLayoutX(200);
+        gameSubscene.setLayoutY(100);
+        mainPane.getChildren().add(gameSubscene);
+    }
+
+    private void addCursorLook() {
+        String CURSOR_EFFECT = "/game/model/buttons/resources/cursor.png";
+        Image cursor = new Image(CURSOR_EFFECT);
+        mainPane.setCursor(new ImageCursor(cursor));
+
     }
 
     public Stage getMainStage() {
@@ -46,6 +71,28 @@ public class View {
 
     }
 
+    private void addRocketGif() {
+        ImageView rocketGif = new ImageView("game/view/resources/flyingrocket.gif");
+        rocketGif.setLayoutY(280);
+        rocketGif.setX(180);
+        mainPane.getChildren().add(rocketGif);
+
+
+    }
+
+    private void addStarsGif() {
+        ImageView starsGif = new ImageView("game/view/resources/stars.gif");
+        starsGif.setLayoutY(280);
+        starsGif.setX(180);
+        mainPane.getChildren().add(starsGif);
+
+        ImageView rocket2Gif = new ImageView("game/view/resources/stars.gif");
+        rocket2Gif.setLayoutY(180);
+        rocket2Gif.setX(380);
+        mainPane.getChildren().add(rocket2Gif);
+    }
+
+
     private void addButtons() {
         addStartButton();
         addScoreButton();
@@ -58,6 +105,7 @@ public class View {
     private void addButtonsInMenu(GameButtons gameButtons) {
         gameButtons.setLayoutX(MENU_BUTTON_X);
         gameButtons.setLayoutY(MENU_BUTTON_Y + gameButtonsList.size() * 100);
+        gameButtons.getEffect();
         gameButtonsList.add(gameButtons);
         mainPane.getChildren().add(gameButtons);
     }
@@ -68,7 +116,7 @@ public class View {
     }
 
     private void addScoreButton() {
-        GameButtons gameScoreButton = new GameButtons("CREDITS");
+        GameButtons gameScoreButton = new GameButtons("SCORE");
         addButtonsInMenu(gameScoreButton);
     }
 
@@ -87,5 +135,15 @@ public class View {
         addButtonsInMenu(gameExitButton);
     }
 
+    private void createLogo() {
+
+        ImageView logo = new ImageView("game/view/resources/logo2.png");
+        logo.setLayoutY(50);
+        logo.setLayoutX(50);
+        logo.setOnMouseEntered(mouseEvent -> logo.setEffect(new SepiaTone()));
+        logo.setOnMouseExited(mouseEvent -> logo.setEffect(new DropShadow()));
+
+        mainPane.getChildren().add(logo);
+    }
 
 }

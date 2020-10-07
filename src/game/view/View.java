@@ -2,20 +2,15 @@ package game.view;
 
 import game.model.GameButtons;
 import game.model.GameSubscene;
-import javafx.event.EventHandler;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Reflection;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +26,13 @@ public class View {
     private final static int MENU_BUTTON_Y = 150;
     List<GameButtons> gameButtonsList;
 
+    private GameSubscene creditsSubscene;
+    private GameSubscene helpSubscene;
+    private GameSubscene scoreSubscene;
+    private GameSubscene exitSubscene;
+    private GameSubscene shipChooser;
+    private GameSubscene sceneToHide;
+
     public View() {
 
         mainPane = new AnchorPane();
@@ -42,14 +44,41 @@ public class View {
         addStarsGif();
         createLogo();
         addCursorLook();
-
+        createSubscens();
         gameButtonsList = new ArrayList<>();
         addButtons();
 
-        GameSubscene gameSubscene = new GameSubscene();
-        gameSubscene.setLayoutX(200);
-        gameSubscene.setLayoutY(100);
-        mainPane.getChildren().add(gameSubscene);
+    }
+
+    private void showSubscene(GameSubscene subscene) {
+
+        if (sceneToHide != null) {
+            sceneToHide.moveSubscene();
+
+        }
+        //sceneToHide = subscene;
+        subscene.moveSubscene();
+
+    }
+
+
+    private void createSubscens() {
+
+        creditsSubscene = new GameSubscene();
+        mainPane.getChildren().add(creditsSubscene);
+
+        helpSubscene = new GameSubscene();
+        mainPane.getChildren().add(helpSubscene);
+
+        scoreSubscene = new GameSubscene();
+        mainPane.getChildren().add(scoreSubscene);
+
+        exitSubscene = new GameSubscene();
+        mainPane.getChildren().add(exitSubscene);
+
+        shipChooser = new GameSubscene();
+        mainPane.getChildren().add(shipChooser);
+
     }
 
     private void addCursorLook() {
@@ -76,7 +105,6 @@ public class View {
         rocketGif.setLayoutY(280);
         rocketGif.setX(180);
         mainPane.getChildren().add(rocketGif);
-
 
     }
 
@@ -113,26 +141,39 @@ public class View {
     private void addStartButton() {
         GameButtons gameButtonStart = new GameButtons("START");
         addButtonsInMenu(gameButtonStart);
+        gameButtonStart.setOnAction(actionEvent ->
+                showSubscene(shipChooser));
+
     }
 
     private void addScoreButton() {
         GameButtons gameScoreButton = new GameButtons("SCORE");
         addButtonsInMenu(gameScoreButton);
+        gameScoreButton.setOnAction(actionEvent ->
+                showSubscene(scoreSubscene));
     }
 
     private void addHelpButton() {
         GameButtons gameHelpButton = new GameButtons("HELP");
         addButtonsInMenu(gameHelpButton);
+        gameHelpButton.setOnAction(actionEvent ->
+                showSubscene(helpSubscene));
     }
 
     private void addCreditButton() {
         GameButtons gameCreditButton = new GameButtons("CREDITS");
+        gameCreditButton.setOnAction(actionEvent -> {
+            showSubscene(creditsSubscene);
+        });
+
         addButtonsInMenu(gameCreditButton);
     }
 
     private void addExitButton() {
         GameButtons gameExitButton = new GameButtons("EXIT");
         addButtonsInMenu(gameExitButton);
+        gameExitButton.setOnAction(actionEvent ->
+                mainStage.close());
     }
 
     private void createLogo() {
@@ -144,6 +185,7 @@ public class View {
         logo.setOnMouseExited(mouseEvent -> logo.setEffect(new DropShadow()));
 
         mainPane.getChildren().add(logo);
+
     }
 
 }

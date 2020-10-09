@@ -10,7 +10,7 @@ public class GameSubscene extends SubScene {
 
     private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
     private static String BACKGROUND_IMAGE = "game/view/resources/yellow_panel.png";
-    boolean isHidden = true;
+    private boolean isHidden = true;
 
     public GameSubscene() {
 
@@ -52,4 +52,7 @@ public class GameSubscene extends SubScene {
 
     }
 
+    public AnchorPane getPane(){
+        return (AnchorPane) getRoot();
+    }
 }

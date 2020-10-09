@@ -6,8 +6,6 @@ import javafx.scene.effect.SepiaTone;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 
-import java.awt.*;
-
 public class GameButtons extends Button {
 
     private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";

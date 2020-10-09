@@ -1,7 +1,6 @@
 package game.view;
 
-import game.model.GameButtons;
-import game.model.GameSubscene;
+import game.model.*;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
@@ -33,6 +32,9 @@ public class View {
     private GameSubscene shipChooser;
     private GameSubscene sceneToHide;
 
+    List<ShipChooser> shipChooserListButton;
+    private SHIP alreadyChosenShip;
+
     public View() {
 
         mainPane = new AnchorPane();
@@ -56,16 +58,16 @@ public class View {
             sceneToHide.moveSubscene();
 
         }
-        //sceneToHide = subscene;
+
         subscene.moveSubscene();
+        sceneToHide = subscene;
 
     }
 
-
     private void createSubscens() {
 
-        creditsSubscene = new GameSubscene();
-        mainPane.getChildren().add(creditsSubscene);
+//        creditsSubscene = new GameSubscene();
+//        mainPane.getChildren().add(creditsSubscene);
 
         helpSubscene = new GameSubscene();
         mainPane.getChildren().add(helpSubscene);
@@ -76,10 +78,67 @@ public class View {
         exitSubscene = new GameSubscene();
         mainPane.getChildren().add(exitSubscene);
 
+        createShipChooserScene();
+        createCreditScene();
+
+    }
+
+    private void createShipChooserScene() {
         shipChooser = new GameSubscene();
         mainPane.getChildren().add(shipChooser);
 
+        InfoLabel choseShipLabel = new InfoLabel("CHOOSE YOUR SHIP");
+        choseShipLabel.setLayoutX(110);
+        choseShipLabel.setLayoutY(25);
+        shipChooser.getPane().getChildren().add(choseShipLabel);
+        shipChooser.getPane().getChildren().add(createBoxesWithShipChose());
+        shipChooser.getPane().getChildren().add(addPlayButtonAfterChoseShip());
+
     }
+
+    private void createCreditScene(){
+
+        creditsSubscene = new GameSubscene();
+        mainPane.getChildren().add(creditsSubscene);
+        TextLabel creditLabel = new TextLabel("THIS GAME WAS CREATED "+ "\n" + "\n" +"WITH TUTORIAL ON 'YOUTUBE'"
+                +"\n" + "\n" +"IT'S A SIMPLE GAME. HAVE FUN! " + "\n"+  "\n"+"                  Norbert   :)");
+
+        creditLabel.setLayoutX(110);
+        creditLabel.setLayoutY(25);
+        creditsSubscene.getPane().getChildren().add(creditLabel);
+    }
+
+    private HBox createBoxesWithShipChose() {
+
+        HBox hBox = new HBox();
+        hBox.setSpacing(20);
+
+        shipChooserListButton = new ArrayList<>();
+        for (SHIP ship : SHIP.values()) {
+            ShipChooser shipChooser = new ShipChooser(ship);
+            shipChooserListButton.add(shipChooser);
+            hBox.getChildren().add(shipChooser);
+
+            shipChooser.setOnMouseClicked(mouseEvent -> {
+                        for (ShipChooser chooser : shipChooserListButton) {
+                            chooser.setIsCircleChosen(false);
+                        }
+
+                        shipChooser.setIsCircleChosen(true);
+                        alreadyChosenShip = shipChooser.getShip();
+                    }
+
+            );
+
+        }
+
+        hBox.setLayoutX(300 - (118 * 2));
+        hBox.setLayoutY(100);
+
+        return hBox;
+
+    }
+
 
     private void addCursorLook() {
         String CURSOR_EFFECT = "/game/model/buttons/resources/cursor.png";
@@ -174,6 +233,15 @@ public class View {
         addButtonsInMenu(gameExitButton);
         gameExitButton.setOnAction(actionEvent ->
                 mainStage.close());
+    }
+
+    private GameButtons addPlayButtonAfterChoseShip(){
+
+        GameButtons playButton = new GameButtons("PLAY");
+        playButton.setLayoutX(350);
+        playButton.setLayoutY(300);
+        playButton.setEffect(new DropShadow());
+        return playButton;
     }
 
     private void createLogo() {

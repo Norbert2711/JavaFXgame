@@ -1,21 +1,34 @@
 package game.model;
 
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Font;
 
 public class InfoLabel extends Label {
 
     private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
+    private static String BACKGROUND_IMAGE = "/game/view/resources/yellow_button13.png";
 
     public InfoLabel(String text) {
 
-        setPrefHeight(400);
-        setWidth(600);
-        setPadding(new Insets(40,40,40,40));
+        setWidth(380);
+        setPrefHeight(49);
+        setAlignment(Pos.CENTER);
         setWrapText(true);
         setText(text);
         setLabelFont();
+
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(BACKGROUND_IMAGE, 500, 49,
+                false, true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, null);
+        setBackground(new Background(backgroundImage));
+
 
     }
 

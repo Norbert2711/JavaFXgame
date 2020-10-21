@@ -9,7 +9,6 @@ import javafx.util.Duration;
 public class GameSubscene extends SubScene {
 
     private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
-    private static String BACKGROUND_IMAGE = "game/view/resources/yellow_panel.png";
     private boolean isHidden = true;
 
     public GameSubscene() {
@@ -18,6 +17,7 @@ public class GameSubscene extends SubScene {
         prefHeight(400);
         prefWidth(600);
 
+        String BACKGROUND_IMAGE = "game/view/resources/yellow_panel.png";
         BackgroundImage backgroundImage = new BackgroundImage(new Image(BACKGROUND_IMAGE, 600, 400, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
 
@@ -55,4 +55,5 @@ public class GameSubscene extends SubScene {
     public AnchorPane getPane(){
         return (AnchorPane) getRoot();
     }
+
 }

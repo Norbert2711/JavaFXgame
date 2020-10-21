@@ -8,8 +8,6 @@ import javafx.scene.text.Font;
 
 public class GameButtons extends Button {
 
-    private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
-    private static String BUTTON_PRESSED_STYLE = " -fx-background-color: transparent; -fx-background-image: url('/game/model/buttons/resources/buttonRed.png');";
     private static String BUTTON_FREE_STYLE = " -fx-background-color: transparent; -fx-background-image: url('/game/model/buttons/resources/buttonYellow.png');";
 
     public GameButtons(String text) {
@@ -23,11 +21,13 @@ public class GameButtons extends Button {
     }
 
     private void setButtonFont() {
+        String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
         setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 23));
 
     }
 
     private void setButtonPressedStyle() {
+        String BUTTON_PRESSED_STYLE = " -fx-background-color: transparent; -fx-background-image: url('/game/model/buttons/resources/buttonRed.png');";
         setStyle(BUTTON_PRESSED_STYLE);
         setPrefHeight(45);
         setLayoutY(getLayoutY() + 4);

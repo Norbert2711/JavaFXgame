@@ -18,7 +18,6 @@ public class View {
     private final static int HEIGHT = 768;
     private final static int WIDTH = 1024;
     private AnchorPane mainPane;
-    private Scene mainScene;
     private Stage mainStage;
 
     private final static int MENU_BUTTON_X = 100;
@@ -28,7 +27,6 @@ public class View {
     private GameSubscene creditsSubscene;
     private GameSubscene helpSubscene;
     private GameSubscene scoreSubscene;
-    private GameSubscene exitSubscene;
     private GameSubscene shipChooser;
     private GameSubscene sceneToHide;
 
@@ -38,7 +36,7 @@ public class View {
     public View() {
 
         mainPane = new AnchorPane();
-        mainScene = new Scene(mainPane, WIDTH, HEIGHT);
+        Scene mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
         createBackground();
@@ -75,11 +73,12 @@ public class View {
         scoreSubscene = new GameSubscene();
         mainPane.getChildren().add(scoreSubscene);
 
-        exitSubscene = new GameSubscene();
+        GameSubscene exitSubscene = new GameSubscene();
         mainPane.getChildren().add(exitSubscene);
 
         createShipChooserScene();
         createCreditScene();
+        createHelpScene();
 
     }
 
@@ -96,16 +95,35 @@ public class View {
 
     }
 
-    private void createCreditScene(){
+    private void createCreditScene() {
 
         creditsSubscene = new GameSubscene();
         mainPane.getChildren().add(creditsSubscene);
-        TextLabel creditLabel = new TextLabel("THIS GAME WAS CREATED "+ "\n" + "\n" +"WITH TUTORIAL ON 'YOUTUBE'"
-                +"\n" + "\n" +"IT'S A SIMPLE GAME. HAVE FUN! " + "\n"+  "\n"+"                  Norbert   :)");
+        TextLabel creditLabel = new TextLabel("THIS GAME WAS CREATED " + "\n" + "\n" + "WITH TUTORIAL ON 'YOUTUBE'"
+                + "\n" + "\n" + "IT'S A SIMPLE GAME. HAVE FUN! " + "\n" + "\n" + "                  Norbert   :)");
 
         creditLabel.setLayoutX(110);
         creditLabel.setLayoutY(25);
         creditsSubscene.getPane().getChildren().add(creditLabel);
+    }
+
+    private void createHelpScene() {
+
+        helpSubscene = new GameSubscene();
+        mainPane.getChildren().add(helpSubscene);
+        TextLabel helpLabel = new TextLabel("Control is simple!" + "\n" + " Use arrow keys" + "\n" + " <--- LEFT" + "\n" +
+                " and " + "\n" + " RIGHT ---> " + "\n" + "on your keyboard");
+        helpLabel.setLayoutX(110);
+        helpLabel.setLayoutY(25);
+
+        String CONTROL_EFFECT = "game/view/resources/arrows.gif";
+        ImageView arrows = new ImageView(CONTROL_EFFECT);
+        arrows.setLayoutX(350);
+        arrows.setLayoutY(250);
+
+        helpSubscene.getPane().getChildren().add(arrows);
+        helpSubscene.getPane().getChildren().add(helpLabel);
+
     }
 
     private HBox createBoxesWithShipChose() {
@@ -221,9 +239,7 @@ public class View {
 
     private void addCreditButton() {
         GameButtons gameCreditButton = new GameButtons("CREDITS");
-        gameCreditButton.setOnAction(actionEvent -> {
-            showSubscene(creditsSubscene);
-        });
+        gameCreditButton.setOnAction(actionEvent -> showSubscene(creditsSubscene));
 
         addButtonsInMenu(gameCreditButton);
     }
@@ -235,12 +251,23 @@ public class View {
                 mainStage.close());
     }
 
-    private GameButtons addPlayButtonAfterChoseShip(){
+    private GameButtons addPlayButtonAfterChoseShip() {
 
         GameButtons playButton = new GameButtons("PLAY");
         playButton.setLayoutX(350);
         playButton.setLayoutY(300);
         playButton.setEffect(new DropShadow());
+
+        playButton.setOnAction(actionEvent -> {
+
+            if (alreadyChosenShip != null) {
+
+                GameViewAndControlManager newGameView = new GameViewAndControlManager();
+                newGameView.createNewGameAfterClickPlay(mainStage, alreadyChosenShip);
+
+            }
+        });
+
         return playButton;
     }
 

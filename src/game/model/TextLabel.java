@@ -6,8 +6,6 @@ import javafx.scene.text.Font;
 
 public class TextLabel extends Label {
 
-    private static String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
-
     public TextLabel(String text) {
 
         setWidth(280);
@@ -20,6 +18,7 @@ public class TextLabel extends Label {
     }
 
     private void setTextFont() {
+        String FONT_PATH = "/game/model/buttons/resources/kenvector_future.ttf";
         setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 23));
 
     }

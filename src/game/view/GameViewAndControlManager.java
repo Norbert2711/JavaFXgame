@@ -18,7 +18,7 @@ public class GameViewAndControlManager {
     private AnchorPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
-
+    private Stage mainStage;
     public Stage menuStage;
 
     private ImageView ship;
@@ -303,11 +303,11 @@ public class GameViewAndControlManager {
         playerLife--;
 
         if (playerLife < 0) {
-            gameStage.close();
             gameTimer.stop();
-            //gameStage.show();
-            menuStage.show();
-
+            gameStage.close();
+           // gameStage.show();
+            //mainStage.show();
+            System.out.println("GAME OVER");
         }
 
     }

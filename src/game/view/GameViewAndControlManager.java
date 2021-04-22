@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 
 import java.util.Random;
 
-
 public class GameViewAndControlManager {
 
     private AnchorPane gamePane;
@@ -63,7 +62,8 @@ public class GameViewAndControlManager {
 
     public void createNewGameAfterClickPlay(Stage menuStage, SHIP chosenShip) {
 
-        menuStage.hide();
+        this.menuStage = menuStage; //wymagane do poruszania sie platformy
+        this.menuStage.hide();
         showShipOnPane(chosenShip);
         createShipAnimationTime();
         createElementsOfGame(chosenShip);
@@ -305,8 +305,8 @@ public class GameViewAndControlManager {
         if (playerLife < 0) {
             gameTimer.stop();
             gameStage.close();
-           // gameStage.show();
-            //mainStage.show();
+            //gameStage.show();
+           // mainStage.show();
             System.out.println("GAME OVER");
         }
 
